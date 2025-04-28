@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button, OverlayTrigger, Tooltip } from '@openedx/paragon';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useIntl } from '@edx/frontend-platform/i18n'
+import { Button, OverlayTrigger, Tooltip } from '@openedx/paragon'
 import {
   Add as IconAdd,
   ArrowDropDown as ArrowDownIcon,
   ArrowDropUp as ArrowUpIcon,
-} from '@openedx/paragon/icons';
+} from '@openedx/paragon/icons'
 
-import messages from './messages';
+import messages from './messages'
 
 const HeaderNavigations = ({
   headerNavigationsActions,
@@ -19,21 +19,20 @@ const HeaderNavigations = ({
   courseActions,
   errors,
 }) => {
-  const intl = useIntl();
-  const {
-    handleNewSection, handleReIndex, handleExpandAll, lmsLink,
-  } = headerNavigationsActions;
+  const intl = useIntl()
+  const { handleNewSection, handleReIndex, handleExpandAll, lmsLink } =
+    headerNavigationsActions
 
   return (
-    <nav className="header-navigations ml-auto">
+    <nav className='header-navigations ml-auto'>
       {courseActions.childAddable && (
         <OverlayTrigger
-          placement="bottom"
-          overlay={(
+          placement='bottom'
+          overlay={
             <Tooltip id={intl.formatMessage(messages.newSectionButtonTooltip)}>
               {intl.formatMessage(messages.newSectionButtonTooltip)}
             </Tooltip>
-          )}
+          }
         >
           <Button
             iconBefore={IconAdd}
@@ -44,19 +43,42 @@ const HeaderNavigations = ({
           </Button>
         </OverlayTrigger>
       )}
+
+      <OverlayTrigger
+        placement='bottom'
+        overlay={
+          <Tooltip id='Ir a Sección de Examenes'>
+            Ir a Sección de Examenes
+          </Tooltip>
+        }
+      >
+        <Button
+          onClick={() =>
+            console.log('🚀 ~ file: HeaderNavigations.jsx:58 ~ Examenes:')
+          }
+          disabled={errors?.outlineIndexApi}
+        >
+          Examenes
+        </Button>
+      </OverlayTrigger>
+
       {isReIndexShow && (
         <OverlayTrigger
-          placement="bottom"
-          overlay={!isDisabledReindexButton ? (
-            <Tooltip id={intl.formatMessage(messages.reindexButtonTooltip)}>
-              {intl.formatMessage(messages.reindexButtonTooltip)}
-            </Tooltip>
-          ) : <React.Fragment key="reindex close" />}
+          placement='bottom'
+          overlay={
+            !isDisabledReindexButton ? (
+              <Tooltip id={intl.formatMessage(messages.reindexButtonTooltip)}>
+                {intl.formatMessage(messages.reindexButtonTooltip)}
+              </Tooltip>
+            ) : (
+              <React.Fragment key='reindex close' />
+            )
+          }
         >
           <Button
             onClick={handleReIndex}
-            data-testid="course-reindex"
-            variant="outline-primary"
+            data-testid='course-reindex'
+            variant='outline-primary'
             disabled={isDisabledReindexButton}
           >
             {intl.formatMessage(messages.reindexButton)}
@@ -65,7 +87,7 @@ const HeaderNavigations = ({
       )}
       {hasSections && (
         <Button
-          variant="outline-primary"
+          variant='outline-primary'
           iconBefore={isSectionsExpanded ? ArrowUpIcon : ArrowDownIcon}
           onClick={handleExpandAll}
         >
@@ -75,28 +97,24 @@ const HeaderNavigations = ({
         </Button>
       )}
       <OverlayTrigger
-        placement="bottom"
-        overlay={(
+        placement='bottom'
+        overlay={
           <Tooltip id={intl.formatMessage(messages.viewLiveButtonTooltip)}>
             {intl.formatMessage(messages.viewLiveButtonTooltip)}
           </Tooltip>
-        )}
+        }
       >
-        <Button
-          href={lmsLink}
-          target="_blank"
-          variant="outline-primary"
-        >
+        <Button href={lmsLink} target='_blank' variant='outline-primary'>
           {intl.formatMessage(messages.viewLiveButton)}
         </Button>
       </OverlayTrigger>
     </nav>
-  );
-};
+  )
+}
 
 HeaderNavigations.defaultProps = {
   errors: {},
-};
+}
 
 HeaderNavigations.propTypes = {
   isReIndexShow: PropTypes.bool.isRequired,
@@ -133,6 +151,6 @@ HeaderNavigations.propTypes = {
       type: PropTypes.string.isRequired,
     }),
   }),
-};
+}
 
-export default HeaderNavigations;
+export default HeaderNavigations
